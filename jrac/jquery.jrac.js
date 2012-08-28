@@ -32,6 +32,7 @@
       'viewport_content_left': 0,
       'viewport_content_top': 0,
       // Submit here a callback function (context is the viewport).
+      'draggable_axis': null,
       'viewport_onload': null
     };
 
@@ -156,6 +157,7 @@
 
           // Enable the image draggable interaction
           $image.draggable({
+            axis: settings.draggable_axis,
             drag: function(event, ui) {
               if (ui.position.left != ui.originalPosition.left) {
                 $viewport.observator.notify('jrac_crop_x', $viewport.observator.crop_position_x());
