@@ -25,6 +25,7 @@
       'viewport_width': null,
       'viewport_height': null,
       'viewport_resize': true,
+      'viewport_zoom': true,
       // The two following properties allow to position the content (negative
       // value allowed). It can be use to focus the viewport on the cropped
       // part of the image.
@@ -119,27 +120,30 @@
 
         // Create the zoom widget which permit to resize the image
         if (!jrac_loaded) {
-          var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
-          .width($viewport.width())
-          .slider({
-            value: $image.width(),
-            min: settings.zoom_min,
-            max: settings.zoom_max,
-            start: function(event, ui) {
-              $.extend($zoom_widget,{
-                on_start_width_value: ui.value,
-                on_start_height_value: $image.height()
-              })
-            },
-            slide: function(event, ui) {
-              var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
-              $image.height(height);
-              $image.width(ui.value);
-              $viewport.observator.notify('jrac_image_height', height);
-              $viewport.observator.notify('jrac_image_width', ui.value);
-            }
-          });
-          $container.append($zoom_widget);
+
+          if (settings.viewport_resize) {
+            var $zoom_widget = $('<div class="jrac_zoom_slider"><div class="ui-slider-handle"></div></div>')
+            .width($viewport.width())
+            .slider({
+              value: $image.width(),
+              min: settings.zoom_min,
+              max: settings.zoom_max,
+              start: function(event, ui) {
+                $.extend($zoom_widget,{
+                  on_start_width_value: ui.value,
+                  on_start_height_value: $image.height()
+                })
+              },
+              slide: function(event, ui) {
+                var height = Math.round($zoom_widget.on_start_height_value * ui.value / $zoom_widget.on_start_width_value);
+                $image.height(height);
+                $image.width(ui.value);
+                $viewport.observator.notify('jrac_image_height', height);
+                $viewport.observator.notify('jrac_image_width', ui.value);
+              }
+            });
+            $container.append($zoom_widget);
+          }
         
           // Make the viewport resizeable
           if (settings.viewport_resize) {
