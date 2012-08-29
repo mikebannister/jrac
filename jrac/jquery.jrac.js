@@ -31,8 +31,8 @@
       // part of the image.
       'viewport_content_left': 0,
       'viewport_content_top': 0,
-      // Submit here a callback function (context is the viewport).
       'draggable_axis': null,
+      // Submit here a callback function (context is the viewport).
       'viewport_onload': null
     };
 
